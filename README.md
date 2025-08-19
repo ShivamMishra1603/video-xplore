@@ -4,7 +4,7 @@
 
 VideoXplore is a modular Streamlit application that combines advanced video analysis with intelligent web research to provide comprehensive insights from video content. Built with Google's Gemini AI and enhanced with real-time web search capabilities.
 
-![Output](public/images/Output.png)
+
 
 ## Demo
 
@@ -163,3 +163,5 @@ See `env_example.txt` for complete prompt templates.
 - Ensure you're using Python 3.8+
 
 
+## Result
+![Output](public/images/Output.png)
