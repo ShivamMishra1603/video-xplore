@@ -1,0 +1,40 @@
+# Prevent sensitive files from being copied into Docker image
+.env
+.env.*
+*.env
+
+# Version control
+.git
+.gitignore
+
+# Python virtual environment and cache
+.venv
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Testing and development
+.pytest_cache/
+.coverage
+.tox/
+
+# Logs (we'll create fresh logs in container)
+logs/
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Documentation and examples
+README.md
+env_example.txt
+*.md
+
+# Docker files (no need to copy into image)
+Dockerfile
+.dockerignore
