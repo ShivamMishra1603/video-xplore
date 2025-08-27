@@ -95,6 +95,8 @@ Create a `.env` file with the following variables:
 GOOGLE_API_KEY=your_google_api_key_here
 PHI_API_KEY=your_phi_api_key_here
 
+
+
 VIDEO_ONLY_PROMPT_TEMPLATE="Your custom video analysis prompt..."
 WEB_RESEARCH_PROMPT_TEMPLATE="Your custom web research prompt..."
 WEB_RESEARCH_INSTRUCTION_TEMPLATE="Your custom research instruction..."
@@ -121,6 +123,7 @@ See `env_example.txt` for complete prompt templates.
 - **`video_processor.py`** - Video file handling and Gemini integration
 - **`ui_components.py`** - Reusable UI components and styling
 - **`analysis.py`** - Analysis logic and prompt generation
+- **`logger.py`** - Centralized logging system with file and console output
 
 ### Key Design Principles
 
@@ -128,6 +131,7 @@ See `env_example.txt` for complete prompt templates.
 - **Environment-driven Configuration** - All settings via environment variables
 - **Caching** - Streamlit caching for performance optimization
 - **Error Handling** - Graceful error handling with user feedback
+- **Comprehensive Logging** - Structured logging for debugging and monitoring
 - **Clean Code** - Minimal, readable code without unnecessary comments
 
 
@@ -161,6 +165,13 @@ See `env_example.txt` for complete prompt templates.
 **Module import errors**
 - Run `pip install -r requirements.txt`
 - Ensure you're using Python 3.8+
+
+### Logging
+
+**View application logs**
+- Check console output for real-time logs
+- Review log files in `logs/` directory
+- Log files are created daily with format `videoxplore_YYYYMMDD.log`
 
 
 ## Result

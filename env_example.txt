@@ -3,6 +3,8 @@
 GOOGLE_API_KEY=your_google_api_key_here
 PHI_API_KEY=your_phi_api_key_here
 
+
+
 VIDEO_ONLY_PROMPT_TEMPLATE="Analyze the uploaded video and respond to this query: {user_query}
 Provide a concise answer based solely on the video content. Keep the response brief and focused - maximum 4-5 sentences.
 Focus only on information directly relevant to the user's query from the video."

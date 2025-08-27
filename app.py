@@ -1,10 +1,13 @@
 import streamlit as st
+import time
 
 from config import config
 from ui_components import ui
 from video_processor import video_processor
 from analysis import analysis_engine
+from logger import log_info, log_error
 
+log_info("Starting VideoXplore application")
 ui.setup_page()
 ui.apply_custom_css()
 
@@ -16,6 +19,7 @@ with left_col:
     video_file = ui.create_video_uploader()
     
     if video_file:
+        log_info(f"Video file uploaded: {video_file.name} ({video_file.size} bytes)")
         video_path = video_processor.process_uploaded_file(video_file)
         video_processor.display_video_preview(video_path)
         
@@ -43,6 +47,9 @@ with right_col:
             st.warning("Please enter a query to analyze the video")
         else:
             try:
+                start_time = time.time()
+                log_info(f"Starting video analysis - Query: {user_query[:50]}...")
+                
                 with st.spinner("Analyzing video and conducting web research..."):
                     processed_video = video_processor.upload_to_gemini(video_path)
                     
@@ -51,6 +58,9 @@ with right_col:
                     )
                     
                     response = analysis_engine.run_analysis(analysis_prompt, processed_video)
+
+                total_time = time.time() - start_time
+                log_info(f"Analysis completed successfully in {total_time:.2f}s")
 
                 ui.display_analysis_results(response.content)
                 
@@ -62,6 +72,7 @@ with right_col:
                 ui.create_download_button(user_query, response.content)
 
             except Exception as e:
+                log_error("Analysis failed", e)
                 st.error(f"An error occurred: {str(e)}")
             finally:
                 video_processor.cleanup_temp_file()

@@ -1,5 +1,7 @@
+import time
 from config import config
 from agents import agent_manager
+from logger import log_info, log_error, log_debug, log_warning
 
 class AnalysisEngine:
     
@@ -7,6 +9,8 @@ class AnalysisEngine:
         pass
     
     def generate_analysis_prompt(self, user_query, include_web_research, search_depth, focus_areas):
+        log_debug("Generating analysis prompt")
+        
         if not include_web_research:
             return self._generate_video_only_prompt(user_query)
         
@@ -30,9 +34,25 @@ class AnalysisEngine:
         )
     
     def run_analysis(self, prompt, processed_video):
-        return agent_manager.run_analysis(prompt, videos=[processed_video])
+        try:
+            log_info("Starting analysis with agent")
+            start_time = time.time()
+            
+            response = agent_manager.run_analysis(prompt, videos=[processed_video])
+            
+            duration = time.time() - start_time
+            log_info(f"Analysis completed successfully in {duration:.2f}s")
+            
+            return response
+            
+        except Exception as e:
+            log_error("Analysis failed", e)
+            raise
     
     def validate_query(self, user_query):
-        return bool(user_query and user_query.strip())
+        is_valid = bool(user_query and user_query.strip())
+        if not is_valid:
+            log_warning("Invalid query provided")
+        return is_valid
 
 analysis_engine = AnalysisEngine()

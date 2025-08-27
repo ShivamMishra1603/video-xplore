@@ -60,5 +60,7 @@ class Config:
         
         if not all([self.video_only_prompt, self.web_research_prompt, self.web_research_instruction]):
             raise ValueError("Prompt templates must be set in .env file. See env_example.txt for format.")
+    
+
 
 config = Config()
