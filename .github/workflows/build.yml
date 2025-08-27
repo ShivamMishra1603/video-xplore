@@ -1,0 +1,26 @@
+# Simple workflow to build Docker image when code is pushed
+name: Build Docker Image
+
+# When should this run? When we push to main branch
+on:
+  push:
+    branches: [ main ]
+
+# What jobs should run?
+jobs:
+  build:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Step 1: Get our code
+    - name: Get the code
+      uses: actions/checkout@v4
+    
+    # Step 2: Build Docker image
+    - name: Build Docker image
+      run: docker build -t videoxplore .
+    
+    # Step 3: Show what we built
+    - name: Show image info
+      run: docker images videoxplore
