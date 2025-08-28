@@ -2,7 +2,13 @@
 
 **AI-Powered Video Analysis & Research Platform**
 
-VideoXplore is a modular Streamlit application that combines advanced video analysis with intelligent web research to provide comprehensive insights from video content. Built with Google's Gemini AI and enhanced with real-time web search capabilities.
+VideoXplore is a production-ready Streamlit application that combines advanced video analysis with intelligent web research to provide comprehensive insights from video content. Built with Google's Gemini AI, enhanced with real-time web search capabilities using DuckDuckGo, containerized with Docker, automated with GitHub Actions, and deployed on Render with modern CI/CD practices.
+
+## Site
+
+**Try it now**: [video-xplore.onrender.com](https://video-xplore.onrender.com)
+
+Upload any video and get AI-powered analysis with web research integration!
 
 
 
@@ -14,30 +20,65 @@ VideoXplore is a modular Streamlit application that combines advanced video anal
 
 ## Features
 
+### Core Functionality
 - **Video Analysis**: Upload and analyze videos using Google Gemini's multimodal AI
 - **Smart Web Research**: Supplement video insights with current web information via DuckDuckGo
 - **Configurable Analysis**: Customizable search depth and focus areas
+- **Export Results**: Download analysis reports as text files
+
+### Production Features
+- **Live Deployment**: Accessible worldwide at [video-xplore.onrender.com](https://video-xplore.onrender.com)
+- **Docker Containerization**: Consistent environments across development and production
+- **CI/CD Pipeline**: Automated building and deployment via GitHub Actions
+- **Comprehensive Logging**: Application monitoring and debugging capabilities
+- **Security Best Practices**: No hardcoded secrets, environment-based configuration
+
+### Technical Excellence
 - **Modern UI**: Clean, responsive interface built with Streamlit
 - **Modular Architecture**: Well-structured, maintainable codebase
 - **Customizable Prompts**: Configure AI prompts via environment variables
-- **Export Results**: Download analysis reports as text files
+- **Professional Deployment**: Production-ready with Render hosting
 
 
 ## Quick Start
 
-### Prerequisites
 
-- Python 3.8+
-- Google API key with Gemini access
-- Phidata API key
-- Internet connection for web research
-
-### Installation
+### Run with Docker (Recommended for Development)
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd VideoXplore
+   git clone https://github.com/ShivamMishra1603/video-xplore.git
+   cd video-xplore
+   ```
+
+2. **Run with Docker**
+   ```bash
+   docker build -t videoxplore .
+   docker run -p 8501:8501 \
+     -e GOOGLE_API_KEY=your_google_api_key \
+     -e PHI_API_KEY=your_phi_api_key \
+     -e VIDEO_ONLY_PROMPT_TEMPLATE="Analyze this video: {user_query}" \
+     -e WEB_RESEARCH_PROMPT_TEMPLATE="Analyze and research: {user_query}" \
+     -e WEB_RESEARCH_INSTRUCTION_TEMPLATE="Search for current information" \
+     videoxplore
+   ```
+
+3. **Open your browser** → `http://localhost:8501`
+
+### Local Development Setup
+
+#### Prerequisites
+- Python 3.8+
+- Google API key with Gemini access
+- Phidata API key
+- Docker (optional but recommended)
+
+#### Installation Steps
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/ShivamMishra1603/video-xplore.git
+   cd video-xplore
    ```
 
 2. **Install dependencies**
@@ -50,7 +91,7 @@ VideoXplore is a modular Streamlit application that combines advanced video anal
    # Copy the example file
    cp env_example.txt .env
    
-   # Edit .env and add your Google API key
+   # Edit .env and add your API keys
    GOOGLE_API_KEY=your_google_api_key_here
    PHI_API_KEY=your_phi_api_key_here
    ```
@@ -60,8 +101,7 @@ VideoXplore is a modular Streamlit application that combines advanced video anal
    streamlit run app.py
    ```
 
-5. **Open your browser**
-   Navigate to `http://localhost:8501`
+5. **Open your browser** → `http://localhost:8501`
 
 ## Usage
 
@@ -113,10 +153,23 @@ VideoXplore supports fully customizable AI prompts through environment variables
 
 See `env_example.txt` for complete prompt templates.
 
-## Development
+
+## Deployment & CI/CD
+
+### Live Application
+- **Production URL**: [video-xplore.onrender.com](https://video-xplore.onrender.com)
+- **Hosting**: Render (Docker-based deployment)
+- **Automatic Deployment**: Triggered by GitHub pushes
+
+### CI/CD Pipeline
+1. **Code Push** → GitHub repository
+2. **GitHub Actions** → Automatically builds Docker image
+3. **Render Deployment** → Deploys container to production
+4. **Live Updates** → Application automatically updates
 
 ### Project Structure
 
+#### Core Application
 - **`app.py`** - Main application entry point and UI layout
 - **`config.py`** - Configuration management and API setup
 - **`agents.py`** - AI agent initialization with caching
@@ -125,15 +178,11 @@ See `env_example.txt` for complete prompt templates.
 - **`analysis.py`** - Analysis logic and prompt generation
 - **`logger.py`** - Centralized logging system with file and console output
 
-### Key Design Principles
-
-- **Modular Architecture** - Each module has a single responsibility
-- **Environment-driven Configuration** - All settings via environment variables
-- **Caching** - Streamlit caching for performance optimization
-- **Error Handling** - Graceful error handling with user feedback
-- **Comprehensive Logging** - Structured logging for debugging and monitoring
-- **Clean Code** - Minimal, readable code without unnecessary comments
-
+#### Deployment & DevOps
+- **`Dockerfile`** - Container configuration for consistent deployments
+- **`.dockerignore`** - Excludes sensitive files from Docker builds
+- **`render.yaml`** - Render deployment configuration
+- **`.github/workflows/build.yml`** - GitHub Actions CI/CD pipeline
 
 
 ## Dependencies
@@ -166,13 +215,18 @@ See `env_example.txt` for complete prompt templates.
 - Run `pip install -r requirements.txt`
 - Ensure you're using Python 3.8+
 
-### Logging
+### Logging & Monitoring
 
-**View application logs**
-- Check console output for real-time logs
-- Review log files in `logs/` directory
-- Log files are created daily with format `videoxplore_YYYYMMDD.log`
+#### Local Development
+- **Console output**: Real-time logs during development
+- **Log files**: `logs/videoxplore_YYYYMMDD.log` (daily rotation)
 
+#### Production (Render)
+- **Render Dashboard**: Real-time application logs
+- **Application Monitoring**: Error tracking and performance metrics
+- **Build Logs**: CI/CD pipeline execution logs
 
-## Result
+## Results
+
+### Sample Output
 ![Output](public/images/Output.png)
