@@ -1,0 +1,19 @@
+# Simple Render deployment configuration
+services:
+  - type: web
+    name: videoxplore
+    env: docker
+    region: oregon
+    plan: free
+    # Render will automatically use your Dockerfile
+    envVars:
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: PHI_API_KEY  
+        sync: false
+      - key: VIDEO_ONLY_PROMPT_TEMPLATE
+        value: "Analyze the uploaded video and respond to this query: {user_query}"
+      - key: WEB_RESEARCH_PROMPT_TEMPLATE
+        value: "Analyze the uploaded video and respond to this query: {user_query}. {web_research_instruction}"
+      - key: WEB_RESEARCH_INSTRUCTION_TEMPLATE
+        value: "Perform web research to supplement the video analysis."
