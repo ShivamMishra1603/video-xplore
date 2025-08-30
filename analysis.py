@@ -33,12 +33,17 @@ class AnalysisEngine:
             web_research_instruction=web_research_instruction
         )
     
-    def run_analysis(self, prompt, processed_video):
+    def run_analysis_with_keys(self, prompt, processed_video, google_api_key, phi_api_key=None):
         try:
-            log_info("Starting analysis with agent")
+            log_info("Starting analysis with agent using user keys")
             start_time = time.time()
             
-            response = agent_manager.run_analysis(prompt, videos=[processed_video])
+            response = agent_manager.run_analysis_with_keys(
+                prompt, 
+                google_api_key, 
+                phi_api_key, 
+                videos=[processed_video]
+            )
             
             duration = time.time() - start_time
             log_info(f"Analysis completed successfully in {duration:.2f}s")
@@ -48,6 +53,22 @@ class AnalysisEngine:
         except Exception as e:
             log_error("Analysis failed", e)
             raise
+    
+    # def run_analysis(self, prompt, processed_video):
+    #     try:
+    #         log_info("Starting analysis with agent")
+    #         start_time = time.time()
+    #         
+    #         response = agent_manager.run_analysis(prompt, videos=[processed_video])
+    #         
+    #         duration = time.time() - start_time
+    #         log_info(f"Analysis completed successfully in {duration:.2f}s")
+    #         
+    #         return response
+    #         
+    #     except Exception as e:
+    #         log_error("Analysis failed", e)
+    #         raise
     
     def validate_query(self, user_query):
         is_valid = bool(user_query and user_query.strip())

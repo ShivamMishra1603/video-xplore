@@ -16,6 +16,12 @@ left_col, right_col = st.columns([1, 1])
 with left_col:
     st.subheader("Video Upload & Settings")
     
+    # API Key inputs
+    google_api_key = ui.create_api_key_inputs()
+    
+    st.divider()
+    
+    # Video uploader
     video_file = ui.create_video_uploader()
     
     if video_file:
@@ -43,10 +49,15 @@ with right_col:
     st.subheader("Analysis Results")
     
     if video_file and analyze_button:
-        if not analysis_engine.validate_query(user_query):
+        if not google_api_key:
+            st.error("Please enter your Google AI Studio API key to proceed")
+        elif not analysis_engine.validate_query(user_query):
             st.warning("Please enter a query to analyze the video")
         else:
             try:
+                # Configure APIs with user keys
+                config.configure_apis_with_keys(google_api_key, None)
+                
                 start_time = time.time()
                 log_info(f"Starting video analysis - Query: {user_query[:50]}...")
                 
@@ -57,7 +68,9 @@ with right_col:
                         user_query, include_web_research, search_depth, focus_areas
                     )
                     
-                    response = analysis_engine.run_analysis(analysis_prompt, processed_video)
+                    response = analysis_engine.run_analysis_with_keys(
+                        analysis_prompt, processed_video, google_api_key, None
+                    )
 
                 total_time = time.time() - start_time
                 log_info(f"Analysis completed successfully in {total_time:.2f}s")

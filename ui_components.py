@@ -28,7 +28,21 @@ class UIComponents:
         st.subheader("AI-Powered Video Analysis & Research")
     
     @staticmethod
+    def create_api_key_inputs():
+        st.markdown("Enter your Google AI Studio API key to get started. [Get API Key](https://aistudio.google.com/app/apikey)")
+        
+        google_api_key = st.text_input(
+            "Google AI Studio API Key",
+            type="password",
+            placeholder="Enter your Google AI Studio API key",
+            help="Required for video analysis. Get it from Google AI Studio"
+        )
+        
+        return google_api_key
+    
+    @staticmethod
     def create_video_uploader():
+        st.markdown("### 📹 Video Upload")
         return st.file_uploader(
             label="Upload a video file",
             type=config.supported_video_formats,

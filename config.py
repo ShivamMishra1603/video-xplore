@@ -8,16 +8,24 @@ load_dotenv()
 class Config:
     
     def __init__(self):
-        self.google_api_key = os.getenv("GOOGLE_API_KEY")
-        self._configure_apis()
+        # Keep environment variable support but make it optional
+        # self.google_api_key = os.getenv("GOOGLE_API_KEY")
+        # self._configure_apis()
         self._load_prompt_templates()
     
-    def _configure_apis(self):
-        if self.google_api_key:
-            genai.configure(api_key=self.google_api_key)
-        else:
-            st.error("Google API key not found")
-            st.stop()
+    def configure_apis_with_keys(self, google_api_key, phi_api_key=None):
+        """Configure APIs with user-provided keys"""
+        if google_api_key:
+            genai.configure(api_key=google_api_key)
+            return True
+        return False
+    
+    # def _configure_apis(self):
+    #     if self.google_api_key:
+    #         genai.configure(api_key=self.google_api_key)
+    #     else:
+    #         st.error("Google API key not found")
+    #         st.stop()
     
     @property
     def page_config(self):
